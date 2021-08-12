@@ -1,0 +1,6 @@
+name: Borg Module
+description: Drupal (Level 1) module
+package: Custom
+
+type: module
+core_version_requirement: ^8.0 || ^9

@@ -1,0 +1,30 @@
+{{ text }}
+{{ form }}
+<div class="cats_database">
+{% for elements in element %}
+  {% if loop.last %}
+  {% if (loop.index%2 != 0) %}
+  <div class="cats_element col-lg-6 col-md-8 col-sm-10 col-xs-12">
+    {% else %}
+    <div class="cats_element col-lg-6 col-md-6 col-sm-10 col-xs-12">
+    {% endif %}
+    {% else %}
+      <div class="cats_element col-lg-6 col-md-6 col-sm-10 col-xs-12">
+  {% endif %}
+    <a href="{{ elements.image_url }}" target="_blank">
+      <div class="image">
+        {{ elements.image }}
+      </div>
+    </a>
+    <div class="cats_info">
+      <p class="cat_name">{{ elements.cat_name }}</p>
+      <p class="email">{{ elements.email }}</p>
+      <p class="time">{{ elements.time }}</p>
+      {% if user.hasPermission('administer nodes') %}
+      <a href="/borg/form/delete/{{ elements.id }}" class="use-ajax" data-dialog-type="modal">{{ elements.delete }}</a>
+      <a href="/borg/form/update/{{ elements.id }}" class="use-ajax" data-dialog-type="modal">{{ elements.update }}</a>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+</div>
