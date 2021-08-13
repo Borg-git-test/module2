@@ -3,7 +3,7 @@ base theme: bootstrap
 core: 8.x
 core_version_requirement: ^8 || ^9
 
-name: 'Borg theme'
+name: 'Borg Sub theme'
 description: 'A Drupal Bootstrap 3 based sub-theme.'
 package: 'Bootstrap'
 
@@ -22,4 +22,4 @@ regions:
 
 libraries-extend:
   bootstrap/framework:
-    - borg/framework
+    - borg_theme/framework

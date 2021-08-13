@@ -1,0 +1,1 @@
+{"version":3,"sources":["_global.scss"],"names":[],"mappings":"AACA;EACE;;AACA;EACE;EACA","file":"style.css","sourcesContent":["\n.navbar-header {\n  width: 100%;\n  .region-navigation {\n    display: flex;\n    justify-content: space-between;\n  }\n}\n\n"]}

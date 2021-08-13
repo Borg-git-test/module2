@@ -1,0 +1,8 @@
+.navbar-header {
+  width: 100%;
+}
+.navbar-header .region-navigation {
+  display: flex;
+  justify-content: space-between;
+}
+/*# sourceMappingURL=style.css.map */

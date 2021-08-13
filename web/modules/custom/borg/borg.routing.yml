@@ -1,0 +1,37 @@
+borg.cats:
+  path: '/borg/cats'
+  defaults:
+    _controller: '\Drupal\borg\Controller\MyController::myNewPage'
+  requirements:
+    _permission: 'access content'
+
+borg.delete_form:
+  path: '/borg/form/delete/{id}'
+  defaults:
+    _form: '\Drupal\borg\Form\DeleteButton'
+    _title: 'DeleteButton'
+  requirements:
+    _permission: 'administer nodes'
+
+borg.update_form:
+  path: '/borg/form/update/{id}'
+  defaults:
+    _form: '\Drupal\borg\Form\UpdateButton'
+    _title: 'UpdateButton'
+  requirements:
+    _permission: 'administer nodes'
+
+borg.cats_list:
+  path: '/borg/cats_list'
+  defaults:
+    _controller: '\Drupal\borg\Controller\CatsListController::myAdminPage'
+  requirements:
+    _permission: 'administer nodes'
+
+borg.delete_all_form:
+  path: '/borg/form/delete_all'
+  defaults:
+    _form: '\Drupal\borg\Form\DeleteAllButton'
+    _title: 'DeleteAllButton'
+  requirements:
+    _permission: 'administer nodes'
