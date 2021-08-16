@@ -1,0 +1,22 @@
+entity.borg.settings:
+  title: Settings
+  route_name: entity.borg.settings
+  base_route: entity.borg.settings
+entity.borg.view:
+  title: View
+  route_name: entity.borg.canonical
+  base_route: entity.borg.canonical
+entity.borg.edit_form:
+  title: Edit
+  route_name: entity.borg.edit_form
+  base_route: entity.borg.canonical
+entity.borg.delete_form:
+  title: Delete
+  route_name: entity.borg.delete_form
+  base_route: entity.borg.canonical
+  weight: 10
+entity.borg.collection:
+  title: borg
+  route_name: entity.borg.collection
+  base_route: system.admin_content
+  weight: 10

@@ -20,5 +20,5 @@
 # Ignore .env files as they are personal
 /.env
 /.docksal
-/web/modules/custom/borg/errors
 /web/themes/custom/borg_theme/node_modules
+/web/modules/custom/borg/src/errors

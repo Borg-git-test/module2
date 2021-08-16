@@ -1,4 +1,10 @@
-borg.cats_list:
-  title: 'Cats list'
+entity.borg.settings:
+  title: borg
+  description: Configure a borg entity type
+  route_name:  entity.borg.settings
   parent: system.admin_structure
-  route_name: borg.cats_list
+entity.borg.collection:
+  title: borgs
+  description: List of borgs
+  route_name: entity.borg.collection
+  parent: system.admin_content

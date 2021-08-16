@@ -1,0 +1,5 @@
+administer borg:
+  title: 'Administer borg settings'
+  restrict access: true
+access borg overview:
+  title: 'Access borg overview page'
