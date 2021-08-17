@@ -83,7 +83,8 @@ class BorgListBuilder extends EntityListBuilder {
     $header['status'] = $this->t('Status');
     $header['uid'] = $this->t('Author');
     $header['created'] = $this->t('Created');
-    $header['changed'] = $this->t('Updated');
+    $header['name'] = $this->t('User name');
+//    $header['changed'] = $this->t('Updated');
     return $header + parent::buildHeader();
   }
 
@@ -91,7 +92,6 @@ class BorgListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var $entity \Drupal\borg\BorgInterface */
     $row['id'] = $entity->id();
     $row['title'] = $entity->toLink();
     $row['status'] = $entity->isEnabled() ? $this->t('Enabled') : $this->t('Disabled');
@@ -100,7 +100,8 @@ class BorgListBuilder extends EntityListBuilder {
       '#account' => $entity->getOwner(),
     ];
     $row['created'] = $this->dateFormatter->format($entity->getCreatedTime());
-    $row['changed'] = $this->dateFormatter->format($entity->getChangedTime());
+//    $row['changed'] = $this->dateFormatter->format($entity->getChangedTime());
+    $row['name'] = $entity->name->value;
     return $row + parent::buildRow($entity);
   }
 

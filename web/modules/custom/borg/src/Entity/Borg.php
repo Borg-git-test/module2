@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\borg\BorgInterface;
 use Drupal\user\UserInterface;
 
 /**
@@ -51,7 +50,7 @@ use Drupal\user\UserInterface;
  *   field_ui_base_route = "entity.borg.settings"
  * )
  */
-class Borg extends ContentEntityBase implements BorgInterface {
+class Borg extends ContentEntityBase implements ContentEntityInterface {
 
   use EntityChangedTrait;
 
@@ -66,21 +65,21 @@ class Borg extends ContentEntityBase implements BorgInterface {
     $values += ['uid' => \Drupal::currentUser()->id()];
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function getTitle() {
-    return $this->get('title')->value;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function setTitle($title) {
-    $this->set('title', $title);
-    return $this;
-  }
-
+//  /**
+//   * {@inheritdoc}
+//   */
+//  public function getTitle() {
+//    return $this->get('title')->value;
+//  }
+//
+//  /**
+//   * {@inheritdoc}
+//   */
+//  public function setTitle($title) {
+//    $this->set('title', $title);
+//    return $this;
+//  }
+//
   /**
    * {@inheritdoc}
    */
@@ -209,44 +208,61 @@ class Borg extends ContentEntityBase implements BorgInterface {
       ->setTranslatable(TRUE)
       ->setLabel(t('Author'))
       ->setDescription(t('The user ID of the borg author.'))
-      ->setSetting('target_type', 'user')
-      ->setDisplayOptions('form', [
-        'type' => 'entity_reference_autocomplete',
-        'settings' => [
-          'match_operator' => 'CONTAINS',
-          'size' => 60,
-          'placeholder' => '',
-        ],
-        'weight' => 15,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'author',
-        'weight' => 15,
-      ])
-      ->setDisplayConfigurable('view', TRUE);
+      ->setSetting('target_type', 'user');
+//      ->setDisplayOptions('form', [
+//        'type' => 'entity_reference_autocomplete',
+//        'settings' => [
+//          'match_operator' => 'CONTAINS',
+//          'size' => 60,
+//          'placeholder' => '',
+//        ],
+//        'weight' => 15,
+//      ])
+//      ->setDisplayConfigurable('form', TRUE)
+//      ->setDisplayOptions('view', [
+//        'label' => 'above',
+//        'type' => 'author',
+//        'weight' => 15,
+//      ])
+//      ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Authored on'))
       ->setTranslatable(TRUE)
-      ->setDescription(t('The time that the borg was created.'))
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'timestamp',
-        'weight' => 20,
+      ->setDescription(t('The time that the borg was created.'));
+//      ->setDisplayOptions('view', [
+//        'label' => 'above',
+//        'type' => 'timestamp',
+//        'weight' => 20,
+//      ])
+//      ->setDisplayConfigurable('form', TRUE)
+//      ->setDisplayOptions('form', [
+//        'type' => 'datetime_timestamp',
+//        'weight' => 20,
+//      ])
+//      ->setDisplayConfigurable('view', TRUE);
+
+//    $fields['changed'] = BaseFieldDefinition::create('changed')
+//      ->setLabel(t('Changed'))
+//      ->setTranslatable(TRUE)
+//      ->setDescription(t('The time that the borg was last edited.'));
+
+    $fields['name'] = BaseFieldDefinition::create('string')
+      ->setTranslatable(TRUE)
+      ->setLabel(t('User name'))
+      ->setDescription(t('The user name.'))
+      ->setSetting('max_length', 255)
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => 1,
       ])
       ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('form', [
-        'type' => 'datetime_timestamp',
-        'weight' => 20,
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => 1,
       ])
       ->setDisplayConfigurable('view', TRUE);
-
-    $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setTranslatable(TRUE)
-      ->setDescription(t('The time that the borg was last edited.'));
 
     return $fields;
   }
