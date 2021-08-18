@@ -22,3 +22,4 @@
 /.docksal
 /web/themes/custom/borg_theme/node_modules
 /web/modules/custom/borg/src/errors
+/web/sites/default/services.yml

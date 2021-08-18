@@ -8,6 +8,7 @@ use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
+use Drupal\file\Entity\File;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -83,8 +84,13 @@ class BorgListBuilder extends EntityListBuilder {
     $header['status'] = $this->t('Status');
     $header['uid'] = $this->t('Author');
     $header['created'] = $this->t('Created');
-    $header['name'] = $this->t('User name');
 //    $header['changed'] = $this->t('Updated');
+    $header['name'] = $this->t('User name');
+    $header['email'] = $this->t('User email');
+    $header['telephone'] = $this->t('User telephone');
+    $header['feedback'] = $this->t('User feedback');
+    $header['avatar'] = $this->t('User avatar');
+
     return $header + parent::buildHeader();
   }
 
@@ -94,14 +100,35 @@ class BorgListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity) {
     $row['id'] = $entity->id();
     $row['title'] = $entity->toLink();
+//    $row['title'] = $entity->title->value;
     $row['status'] = $entity->isEnabled() ? $this->t('Enabled') : $this->t('Disabled');
     $row['uid']['data'] = [
       '#theme' => 'username',
       '#account' => $entity->getOwner(),
     ];
-    $row['created'] = $this->dateFormatter->format($entity->getCreatedTime());
+    $row['created'] = $this->dateFormatter->format($entity->getCreatedTime(), 'custom', 'j/F/Y H:i:s');
+//    $row['created'] = date('j/F/Y H:i:s', $entity->getCreatedTime());
 //    $row['changed'] = $this->dateFormatter->format($entity->getChangedTime());
     $row['name'] = $entity->name->value;
+    $row['email'] = $entity->email->value;
+    $row['telephone'] = $entity->telephone->value;
+    $row['feedback'] = $entity->feedback->format;
+
+    $file = File::load($entity->avatar->target_id);
+    $row['avatar'] = [
+      '#type' => 'image',
+      '#theme' => 'image_style',
+      '#style_name' => 'large',
+      '#uri' => $file->getFileUri(),
+    ];
+//    $value['image_url'] = file_create_url($file->getFileUri());
+    $renderer = \Drupal::service('renderer');
+    $row['avatar'] = $renderer->render($row['avatar']);
+
+//    $row['avatar'] = \Drupal::service('renderer')->render($entity->avatar->target_id);
+//    $row['avatar'] = $entity->avatar->value;
+//    $row['avatar'] = \Drupal::entityTypeManager()->getViewBuilder('borg');
+
     return $row + parent::buildRow($entity);
   }
 

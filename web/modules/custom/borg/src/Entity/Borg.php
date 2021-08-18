@@ -180,7 +180,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'type' => 'boolean',
-        'label' => 'above',
+        'label' => 'hidden',
         'weight' => 0,
         'settings' => [
           'format' => 'enabled-disabled',
@@ -188,21 +188,21 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ])
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['description'] = BaseFieldDefinition::create('text_long')
-      ->setTranslatable(TRUE)
-      ->setLabel(t('Description'))
-      ->setDescription(t('A description of the borg.'))
-      ->setDisplayOptions('form', [
-        'type' => 'text_textarea',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayOptions('view', [
-        'type' => 'text_default',
-        'label' => 'above',
-        'weight' => 10,
-      ])
-      ->setDisplayConfigurable('view', TRUE);
+//    $fields['description'] = BaseFieldDefinition::create('text_long')
+//      ->setTranslatable(TRUE)
+//      ->setLabel(t('Description'))
+//      ->setDescription(t('A description of the borg.'))
+//      ->setDisplayOptions('form', [
+//        'type' => 'text_textarea',
+//        'weight' => 10,
+//      ])
+//      ->setDisplayConfigurable('form', TRUE)
+//      ->setDisplayOptions('view', [
+//        'type' => 'text_default',
+//        'label' => 'above',
+//        'weight' => 10,
+//      ])
+//      ->setDisplayConfigurable('view', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setTranslatable(TRUE)
@@ -251,16 +251,95 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setTranslatable(TRUE)
       ->setLabel(t('User name'))
       ->setDescription(t('The user name.'))
-      ->setSetting('max_length', 255)
+      ->setRequired(TRUE)
+      ->setSetting('max_length', 50)
       ->setDisplayOptions('form', [
         'type' => 'string_textfield',
         'weight' => 1,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label' => 'above',
+        'label' => 'hidden',
         'type' => 'string',
         'weight' => 1,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['email'] = BaseFieldDefinition::create('email')
+      ->setTranslatable(TRUE)
+      ->setLabel(t('User email'))
+      ->setDescription(t('The user email.'))
+      ->setSetting('max_length', 255)
+      ->setRequired(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'email_default',
+        'weight' => 2,
+        'settings' => [
+          'placeholder' => 'email_mail@mail.com',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'email_mailto',
+        'weight' => 2,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['telephone'] = BaseFieldDefinition::create('telephone')
+      ->setTranslatable(TRUE)
+      ->setLabel(t('User telephone'))
+      ->setDescription(t('The user telephone.'))
+      ->setSetting('max_length', 25)
+      ->setRequired(TRUE)
+      ->setDisplayOptions('form', [
+        'type' => 'telephone_default',
+        'weight' => 3,
+        'settings' => [
+          'placeholder' => '12345',
+        ],
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'telephone_link',
+        'weight' => 3,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['feedback'] = BaseFieldDefinition::create('text_long')
+      ->setTranslatable(TRUE)
+      ->setLabel(t('User feedback'))
+      ->setDescription(t('The user feedback.'))
+      ->setRequired(TRUE)
+      ->setSetting('max_length', 550)
+      ->setDisplayOptions('form', [
+        'type' => 'text_textarea',
+        'weight' => 4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'text_default',
+        'weight' => 4,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['avatar'] = BaseFieldDefinition::create('image')
+      ->setTranslatable(TRUE)
+      ->setLabel(t('User avatar'))
+      ->setDescription(t('The user avatar.'))
+      ->setRequired(TRUE)
+//      ->setSetting('max_length', 550)
+      ->setDisplayOptions('form', [
+        'type' => 'image_image',
+        'weight' => 5,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'image',
+        'weight' => 5,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
