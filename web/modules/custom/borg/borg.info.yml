@@ -7,4 +7,5 @@ core_version_requirement: ^8 || ^9
 dependencies:
   - drupal:text
   - drupal:telephone
+  - drupal:image
 configure: entity.borg.settings
