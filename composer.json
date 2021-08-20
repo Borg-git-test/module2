@@ -22,6 +22,7 @@
         "drupal/core-project-message": "^9",
         "drupal/core-recommended": "^9",
         "drupal/devel_entity_updates": "^3.0",
+        "drupal/masquerade": "^2.0@beta",
         "drush/drush": "^10.2"
     },
     "conflict": {

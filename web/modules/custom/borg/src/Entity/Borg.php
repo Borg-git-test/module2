@@ -27,7 +27,7 @@ use Drupal\user\UserInterface;
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
+ *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
  *     }
  *   },
  *   base_table = "borg",
@@ -45,7 +45,7 @@ use Drupal\user\UserInterface;
  *     "canonical" = "/borg/{borg}",
  *     "edit-form" = "/borg/{borg}/edit",
  *     "delete-form" = "/borg/{borg}/delete",
- *     "collection" = "/admin/content/borg"
+ *     "collection" = "/borg"
  *   },
  *   field_ui_base_route = "entity.borg.settings"
  * )
@@ -60,9 +60,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
    * When a new borg entity is created, set the uid entity reference to
    * the current user as the creator of the entity.
    */
-  public static function preCreate(EntityStorageInterface $storage_controller,
-    array &$values
-  ) {
+  public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
     $values += ['uid' => \Drupal::currentUser()->id()];
   }
@@ -70,92 +68,39 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   /**
    * {@inheritdoc}
    */
-  public static function baseFieldDefinitions(EntityTypeInterface $entity_type
-  ) {
+  public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
     $fields = parent::baseFieldDefinitions($entity_type);
-
-    //    $fields['title'] = BaseFieldDefinition::create('string')
-    //      ->setTranslatable(TRUE)
-    //      ->setLabel(t('Title'))
-    //      ->setDescription(t('The title of the borg entity.'))
-    //      ->setRequired(TRUE)
-    //      ->setSetting('max_length', 255)
-    //      ->setDisplayOptions('form', [
-    //        'type' => 'string_textfield',
-    //        'weight' => -5,
-    //      ])
-    //      ->setDisplayConfigurable('form', TRUE)
-    //      ->setDisplayOptions('view', [
-    //        'label' => 'hidden',
-    //        'type' => 'string',
-    //        'weight' => -5,
-    //      ])
-    //      ->setDisplayConfigurable('view', TRUE);
-
-    //    $fields['status'] = BaseFieldDefinition::create('boolean')
-    //      ->setLabel(t('Status'))
-    //      ->setDescription(t('A boolean indicating whether the borg is enabled.'))
-    //      ->setDefaultValue(TRUE)
-    //      ->setSetting('on_label', 'Enabled');
-
-    //    $fields['description'] = BaseFieldDefinition::create('text_long')
-    //      ->setTranslatable(TRUE)
-    //      ->setLabel(t('Description'))
-    //      ->setDescription(t('A description of the borg.'))
-    //      ->setDisplayOptions('form', [
-    //        'type' => 'text_textarea',
-    //        'weight' => 10,
-    //      ])
-    //      ->setDisplayConfigurable('form', TRUE)
-    //      ->setDisplayOptions('view', [
-    //        'type' => 'text_default',
-    //        'label' => 'above',
-    //        'weight' => 10,
-    //      ])
-    //      ->setDisplayConfigurable('view', TRUE);
 
     $fields['uid'] = BaseFieldDefinition::create('entity_reference')
       ->setTranslatable(TRUE)
       ->setLabel(t('Author'))
-      ->setDescription(t('The user ID of the borg author.'))
       ->setSetting('target_type', 'user');
-    //      ->setDisplayOptions('form', [
-    //        'type' => 'entity_reference_autocomplete',
-    //        'settings' => [
-    //          'match_operator' => 'CONTAINS',
-    //          'size' => 60,
-    //          'placeholder' => '',
-    //        ],
-    //        'weight' => 15,
-    //      ])
-    //      ->setDisplayConfigurable('form', TRUE)
-    //      ->setDisplayOptions('view', [
-    //        'label' => 'above',
-    //        'type' => 'author',
-    //        'weight' => 15,
-    //      ])
-    //      ->setDisplayConfigurable('view', TRUE);
-
-    //    $fields['changed'] = BaseFieldDefinition::create('changed')
-    //      ->setLabel(t('Changed'))
-    //      ->setTranslatable(TRUE)
-    //      ->setDescription(t('The time that the borg was last edited.'));
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setTranslatable(TRUE)
       ->setLabel(t('User name'))
-      ->setDescription(t('The user name.'))
+      ->setDescription(t('max value 100; min value 2;'))
       ->setRequired(TRUE)
-      ->setSetting('max_length', 50)
+      ->setDefaultValue(NULL)
+      ->setSetting('max_length', 255)
+      ->addPropertyConstraints('value', [
+        'Length' => [
+          'max' => 100,
+          'min' => 2,
+        ],
+      ])
       ->setDisplayOptions('form', [
-        'type'   => 'string_textfield',
+        'type' => 'string_textfield',
         'weight' => -10,
+        'settings' => [
+          'placeholder' => 'Your name',
+        ],
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label'  => 'hidden',
-        'type'   => 'string',
+        'label' => 'hidden',
+        'type' => 'text_default',
         'weight' => -10,
       ])
       ->setDisplayConfigurable('view', TRUE);
@@ -163,21 +108,20 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
     $fields['avatar'] = BaseFieldDefinition::create('image')
       ->setTranslatable(TRUE)
       ->setLabel(t('User avatar'))
-      ->setDescription(t('The user avatar.'))
       ->setSettings([
-        'file_directory'     => '/borg/avatar/',
+        'file_directory' => '/borg/avatar/',
         'alt_field_required' => TRUE,
-        //        'file_extensions' => 'png jpg jpeg',
-        'max_filesize'       => 2097152,
+        'file_extensions' => 'png jpg jpeg',
+        'max_filesize' => 2097152,
       ])
       ->setDisplayOptions('form', [
-        'type'   => 'image_image',
+        'type' => 'image_image',
         'weight' => 0,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label'  => 'hidden',
-        'type'   => 'image',
+        'label' => 'hidden',
+        'type' => 'image',
         'weight' => 0,
       ])
       ->setDisplayConfigurable('view', TRUE);
@@ -185,20 +129,20 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
     $fields['email'] = BaseFieldDefinition::create('email')
       ->setTranslatable(TRUE)
       ->setLabel(t('User email'))
-      ->setDescription(t('The user email.'))
+      ->setDescription(t('Your email'))
       ->setSetting('max_length', 255)
       ->setRequired(TRUE)
       ->setDisplayOptions('form', [
-        'type'     => 'email_default',
-        'weight'   => 0,
+        'type' => 'email_default',
+        'weight' => 0,
         'settings' => [
-          'placeholder' => 'email_mail@mail.com',
+          'placeholder' => 'email.mail@mail.com',
         ],
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label'  => 'hidden',
-        'type'   => 'email_mailto',
+        'label' => 'hidden',
+        'type' => 'email_mailto',
         'weight' => 0,
       ])
       ->setDisplayConfigurable('view', TRUE);
@@ -206,76 +150,86 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
     $fields['telephone'] = BaseFieldDefinition::create('telephone')
       ->setTranslatable(TRUE)
       ->setLabel(t('User telephone'))
-      ->setDescription(t('The user telephone.'))
-      ->setSetting('max_length', 25)
+      ->setDescription(t('Your telephone'))
+      ->setSettings([
+        'max_length' => 25,
+//        'pattern' => '/^[0-9]{10,11}$/',
+      ])
+      ->addPropertyConstraints('value', [
+        'Length' => [
+          'max' => 15,
+          'min' => 9,
+        ],
+      ])
       ->setRequired(TRUE)
+//      ->addConstraint('NotEmptyWhenPublished', [])
       ->setDisplayOptions('form', [
-        'type'     => 'telephone_default',
-        'weight'   => 0,
+        'type' => 'telephone_default',
+        'weight' => 0,
+//        'pattern' => '/^[0-9]{10,11}$/',
         'settings' => [
           'placeholder' => '12345',
+//          'pattern' => '/^[0-9]{10,11}$/',
         ],
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label'  => 'hidden',
-        'type'   => 'telephone_link',
+        'label' => 'hidden',
+        'type' => 'telephone_link',
         'weight' => 0,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
-    $fields['feedback'] = BaseFieldDefinition::create('text_long')
+    $fields['feedback'] = BaseFieldDefinition::create('string_long')
       ->setTranslatable(TRUE)
       ->setLabel(t('User feedback'))
-      ->setDescription(t('The user feedback.'))
+      ->setDescription(t('Your feedback'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 550)
       ->setDisplayOptions('form', [
-        'type'   => 'text_textarea',
+        'type' => 'string_textarea',
         'weight' => 5,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label'  => 'hidden',
-        'type'   => 'text_default',
+        'label' => 'hidden',
+        'type' => 'basic_string',
         'weight' => 5,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['image'] = BaseFieldDefinition::create('image')
       ->setLabel(t('Image'))
-      ->setDescription(t('The user image.'))
       ->setTranslatable(TRUE)
       ->setSettings([
-        'file_directory'     => '/borg/images/',
+        'file_directory' => '/borg/images/',
         'alt_field_required' => TRUE,
-        //        'file_extensions' => 'png jpg jpeg',
-        'max_filesize'       => 5242880,
+        'file_extensions' => 'png jpg jpeg',
+        'max_filesize' => 5242880,
       ])
       ->setDisplayOptions('form', [
-        'type'   => 'image_image',
+        'type' => 'image_image',
         'weight' => 5,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
-        'label'  => 'hidden',
-        'type'   => 'image',
+        'label' => 'hidden',
+        'type' => 'image',
         'weight' => 5,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created on'))
+      ->setLabel(t('Created'))
       ->setTranslatable(TRUE)
-      ->setDescription(t('The time that the borg was created.'))
       ->setDisplayOptions('view', [
-        'label'    => 'hidden',
-        'type'     => 'timestamp',
+        'label' => 'hidden',
+        'type' => 'timestamp',
         'settings' => [
-          'date_format'        => 'custom',
+          'date_format' => 'custom',
           'custom_date_format' => 'F/j/Y H:i:s',
         ],
-        'weight'   => 10,
+        'weight' => 10,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
