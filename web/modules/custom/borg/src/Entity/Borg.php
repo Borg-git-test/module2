@@ -24,7 +24,7 @@ use Drupal\user\UserInterface;
  *     "form" = {
  *       "add" = "Drupal\borg\Form\BorgForm",
  *       "edit" = "Drupal\borg\Form\BorgForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm"
+ *       "delete" = "Drupal\borg\Form\DeleteButton"
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider",
@@ -110,7 +110,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setLabel(t('User avatar'))
       ->setSettings([
         'file_directory' => '/borg/avatar/',
-        'alt_field_required' => TRUE,
+        'alt_field_required' => FALSE,
         'file_extensions' => 'png jpg jpeg',
         'max_filesize' => 2097152,
       ])
@@ -203,7 +203,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setTranslatable(TRUE)
       ->setSettings([
         'file_directory' => '/borg/images/',
-        'alt_field_required' => TRUE,
+        'alt_field_required' => FALSE,
         'file_extensions' => 'png jpg jpeg',
         'max_filesize' => 5242880,
       ])
@@ -250,21 +250,6 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
     $this->set('name', $name);
     return $this;
   }
-//
-//  /**
-//   * {@inheritdoc}
-//   */
-//  public function isEnabled() {
-//    return (bool) $this->get('status')->value;
-//  }
-//
-//  /**
-//   * {@inheritdoc}
-//   */
-//  public function setStatus($status) {
-//    $this->set('status', $status);
-//    return $this;
-//  }
 
   /**
    * {@inheritdoc}

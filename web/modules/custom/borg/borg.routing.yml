@@ -5,3 +5,27 @@ entity.borg.settings:
     _title: 'borg'
   requirements:
     _permission: 'administer borg'
+
+entity.borg.delete_form:
+  path: '/borg/{borg}/delete'
+  defaults:
+    _entity_form: borg.delete
+    _title: 'DeleteButton'
+  requirements:
+    _permission: 'administer borg'
+
+entity.borg.canonical:
+  path: '/borg/{borg}'
+  defaults:
+    _entity_view: 'borg'
+    _title: 'View content'
+  requirements:
+    _permission: 'access content'
+
+entity.borg.collection:
+  path: '/borg'
+  defaults:
+    _entity_list: 'borg'
+    _title: 'List content'
+  requirements:
+    _permission: 'access content'

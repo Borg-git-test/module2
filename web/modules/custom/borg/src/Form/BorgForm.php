@@ -23,12 +23,12 @@ class BorgForm extends ContentEntityForm {
     $logger_arguments = $message_arguments + ['link' => render($link)];
 
     if ($result == SAVED_NEW) {
-      $this->messenger()->addStatus($this->t('New borg %label has been created.', $message_arguments));
-      $this->logger('borg')->notice('Created new borg %label', $logger_arguments);
+      $this->messenger()->addStatus($this->t('New feedback %label has been created.', $message_arguments));
+      $this->logger('borg')->notice('Created new feedback %label', $logger_arguments);
     }
     else {
-      $this->messenger()->addStatus($this->t('The borg %label has been updated.', $message_arguments));
-      $this->logger('borg')->notice('Updated new borg %label.', $logger_arguments);
+      $this->messenger()->addStatus($this->t('The feedback %label has been updated.', $message_arguments));
+      $this->logger('borg')->notice('Updated new feedback %label.', $logger_arguments);
     }
 
     $form_state->setRedirect('entity.borg.canonical', ['borg' => $entity->id()]);

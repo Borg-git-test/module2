@@ -80,8 +80,6 @@ class BorgListBuilder extends EntityListBuilder {
    */
   public function buildHeader() {
     $header['id'] = $this->t('ID');
-//    $header['title'] = $this->t('Title');
-//    $header['status'] = $this->t('Status');
     $header['uid'] = $this->t('Author');
     $header['created'] = $this->t('Created');
     $header['name'] = $this->t('User name');
@@ -98,8 +96,6 @@ class BorgListBuilder extends EntityListBuilder {
    */
   public function buildRow(EntityInterface $entity) {
     $row['id'] = $entity->id();
-//    $row['title'] = $entity->toLink();
-//    $row['status'] = $entity->isEnabled() ? $this->t('Enabled') : $this->t('Disabled');
     $row['uid']['data'] = [
       '#theme' => 'username',
       '#account' => $entity->getOwner(),
@@ -111,20 +107,20 @@ class BorgListBuilder extends EntityListBuilder {
     $row['telephone'] = $entity->telephone->value;
     $row['feedback'] = $entity->getMessage();
 
-    $row['avatar']['data'] = [
-      '#theme' => 'image',
-      '#image' => \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($entity->avatar),
-    ];
-
-//    $file = File::load($entity->avatar->target_id);
-//    $row['avatar'] = [
+//    $row['avatar']['data'] = [
 //      '#type' => 'image',
-//      '#theme' => 'image_style',
-//      '#style_name' => 'large',
-//      '#uri' => $file->getFileUri(),
+//      '#image' => \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($entity->avatar),
 //    ];
-//    $renderer = \Drupal::service('renderer');
-//    $row['avatar'] = $renderer->render($row['avatar']);
+
+    $file = File::load($entity->avatar->target_id);
+    $row['avatar'] = [
+      '#type' => 'image',
+      '#theme' => 'image_style',
+      '#style_name' => 'large',
+      '#uri' => $file->getFileUri(),
+    ];
+    $renderer = \Drupal::service('renderer');
+    $row['avatar'] = $renderer->render($row['avatar']);
 
 //    $row['avatar'] = $entity->avatar->first();
 //    $row['avatar'] = \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($entity->avatar);

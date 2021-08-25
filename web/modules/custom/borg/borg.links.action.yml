@@ -1,5 +1,5 @@
 borg.add_form:
   route_name: entity.borg.add_form
-  title: 'Add borg'
+  title: 'Add comment'
   appears_on:
     - entity.borg.collection
