@@ -8,7 +8,6 @@ use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
-use Drupal\file\Entity\File;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -105,26 +104,7 @@ class BorgListBuilder extends EntityListBuilder {
     $row['name'] = $entity->toLink($entity->getName());
     $row['email'] = $entity->email->value;
     $row['telephone'] = $entity->telephone->value;
-    $row['feedback'] = $entity->getMessage();
-
-//    $row['avatar']['data'] = [
-//      '#type' => 'image',
-//      '#image' => \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($entity->avatar),
-//    ];
-
-    $file = File::load($entity->avatar->target_id);
-    $row['avatar'] = [
-      '#type' => 'image',
-      '#theme' => 'image_style',
-      '#style_name' => 'large',
-      '#uri' => $file->getFileUri(),
-    ];
-    $renderer = \Drupal::service('renderer');
-    $row['avatar'] = $renderer->render($row['avatar']);
-
-//    $row['avatar'] = $entity->avatar->first();
-//    $row['avatar'] = \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($entity->avatar);
-
+    $row['feedback'] = $entity->getFeedback();
     return $row + parent::buildRow($entity);
   }
 

@@ -15,6 +15,9 @@ function borg_theme() {
     'borg' => [
       'render element' => 'elements',
     ],
+    'add' => [
+      'render element' => 'elements',
+    ],
   ];
 }
 
@@ -33,4 +36,26 @@ function template_preprocess_borg(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+
+//  /** @var ArtworkInterface $entity */
+  $entity = $variables['elements']['#borg'];
+  //provide the label
+  $variables['label'] = $entity->label();
+  //provide the alias
+  $variables['url'] = $entity->toUrl()->toString();
+
+//  $variables['content']['telephone'] = $entity->getTelephone();
+
+  if (empty($entity->avatar->target_id)) {
+    $variables['content']['avatar'] = $entity->getDefaultAvatar();
+  }
+
+
+//  if (is_null($entity->getAvatar())) {
+//    $variables['content']['avatar'] = [
+//      '#theme' => 'image',
+//      '#uri' => $entity->getDefaultAvatar(),
+//      '#alt' => t('Default Guest avatar.'),
+//    ];
+//  }
 }

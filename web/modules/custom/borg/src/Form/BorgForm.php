@@ -13,6 +13,45 @@ class BorgForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+    /* @var $entity \Drupal\borg\Entity\Borg */
+    $form = parent::buildForm($form, $form_state);
+//    $entity = $this->entity;
+
+    $form['name']['widget'][0]['value']['#ajax'] = [
+      'callback' => '::nameValid',
+      'event' => 'change',
+    ];
+    $form['message_name'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="message_name"></div>',
+    ];
+    $form['email']['widget'][0]['value']['#ajax'] = [
+      'callback' => '::emailValid',
+      'event' => 'change',
+    ];
+    $form['message_email'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="message_email"></div>',
+    ];
+    $form['telephone']['widget'][0]['value']['#ajax'] = [
+      'callback' => '::telephoneValid',
+      'event' => 'change',
+    ];
+    $form['message_telephone'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="message_telephone"></div>',
+    ];
+
+//    $form['telephone']['widget'][0]['value']['#attributes'] = ["pattern" => "[0-9]{10,11}"];
+//    $form['avatar']['widget'][0]['#alt'] = "image not found";
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function save(array $form, FormStateInterface $form_state) {
 
     $entity = $this->getEntity();

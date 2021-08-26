@@ -14,6 +14,14 @@ entity.borg.delete_form:
   requirements:
     _permission: 'administer borg'
 
+entity.borg.edit_form:
+  path: '/borg/{borg}/edit'
+  defaults:
+    _entity_form: borg.edit
+    _title: 'EditForm'
+  requirements:
+    _permission: 'administer borg'
+
 entity.borg.canonical:
   path: '/borg/{borg}'
   defaults:

@@ -15,8 +15,8 @@ use Drupal\user\UserInterface;
  *
  * @ContentEntityType(
  *   id = "borg",
- *   label = @Translation("borg"),
- *   label_collection = @Translation("borgs"),
+ *   label = @Translation("Your feedback"),
+ *   label_collection = @Translation("Feedbacks"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\borg\Controller\BorgListBuilder",
@@ -80,7 +80,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setTranslatable(TRUE)
       ->setLabel(t('User name'))
-      ->setDescription(t('max value 100; min value 2;'))
+      ->setDescription(t('maximum value 100; minimum value 2;'))
       ->setRequired(TRUE)
       ->setDefaultValue(NULL)
       ->setSetting('max_length', 255)
@@ -111,6 +111,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setSettings([
         'file_directory' => '/borg/avatar/',
         'alt_field_required' => FALSE,
+        'alt_field' => FALSE,
         'file_extensions' => 'png jpg jpeg',
         'max_filesize' => 2097152,
       ])
@@ -153,23 +154,13 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setDescription(t('Your telephone'))
       ->setSettings([
         'max_length' => 25,
-//        'pattern' => '/^[0-9]{10,11}$/',
-      ])
-      ->addPropertyConstraints('value', [
-        'Length' => [
-          'max' => 15,
-          'min' => 9,
-        ],
       ])
       ->setRequired(TRUE)
-//      ->addConstraint('NotEmptyWhenPublished', [])
       ->setDisplayOptions('form', [
         'type' => 'telephone_default',
         'weight' => 0,
-//        'pattern' => '/^[0-9]{10,11}$/',
         'settings' => [
-          'placeholder' => '12345',
-//          'pattern' => '/^[0-9]{10,11}$/',
+          'placeholder' => '0997548675',
         ],
       ])
       ->setDisplayConfigurable('form', TRUE)
@@ -204,8 +195,12 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setSettings([
         'file_directory' => '/borg/images/',
         'alt_field_required' => FALSE,
+        'alt_field' => FALSE,
         'file_extensions' => 'png jpg jpeg',
         'max_filesize' => 5242880,
+        'default_image' => [
+          'alt' => 'image not found',
+        ],
       ])
       ->setDisplayOptions('form', [
         'type' => 'image_image',
@@ -237,14 +232,14 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Get user Name.
    */
   public function getName() {
     return $this->get('name')->value;
   }
 
   /**
-   * {@inheritdoc}
+   * Set user Name.
    */
   public function setName($name) {
     $this->set('name', $name);
@@ -252,65 +247,93 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Get created time.
    */
   public function getCreatedTime() {
     return $this->get('created')->value;
   }
 
   /**
-   * {@inheritdoc}
+   * Set created time.
    */
   public function setCreatedTime($timestamp) {
-    $this->set('created', $timestamp);
-    return $this;
+    return $this->set('created', $timestamp);
   }
 
   /**
-   * {@inheritdoc}
+   * Get user id.
    */
   public function getOwner() {
     return $this->get('uid')->entity;
   }
-//
-//  /**
-//   * {@inheritdoc}
-//   */
-//  public function getOwnerId() {
-//    return $this->get('uid')->target_id;
-//  }
-//
-//  /**
-//   * {@inheritdoc}
-//   */
-//  public function setOwnerId($uid) {
-//    $this->set('uid', $uid);
-//    return $this;
-//  }
 
   /**
-   * {@inheritdoc}
+   * Set user id.
    */
   public function setOwner(UserInterface $account) {
-    $this->set('uid', $account->id());
-    return $this;
+    return $this->set('uid', $account->id());
   }
 
   /**
-   * Get guest feedback message.
+   * Get user feedback.
    */
-  public function getMessage() {
+  public function getFeedback() {
     return $this->get('feedback')->value;
   }
 
   /**
    * Set guest feedback message.
    */
-  public function setMessage($feedback, $format) {
+  public function setFeedback($feedback, $format) {
     return $this->set('feedback', [
       'value' => $feedback,
       'format' => $format,
     ]);
+  }
+
+  /**
+   * Get user email.
+   */
+  public function getEmail() {
+    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('email'), [
+      'label' => 'hidden',
+      'type' => 'email_mailto',
+    ]);
+  }
+
+  /**
+   * Get user telephone.
+   */
+  public function getTelephone() {
+    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('telephone'), [
+      'label' => 'hidden',
+      'type' => 'telephone_link',
+    ]);
+  }
+
+  /**
+   * Get user avatar.
+   */
+  public function getAvatar() {
+    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('avatar'), ['label' => 'hidden']);
+  }
+
+  /**
+   * Get user feedback image.
+   */
+  public function getFeedbackImage() {
+    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('image'), ['label' => 'hidden']);
+  }
+
+  /**
+   * Get Default image Avatar.
+   */
+  public function getDefaultAvatar() {
+    return [
+      '#theme' => 'image',
+      '#uri' => '/modules/custom/borg/defaultImage/3.jpg',
+      '#alt' => t('Default avatar.'),
+    ];
   }
 
 }

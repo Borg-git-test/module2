@@ -14,9 +14,19 @@
  * @see template_preprocess_borg()
  */
 #}
-<article{{ attributes }}>
+
+<div{{ attributes.addClass('container') }}>
   {% if content %}
     {{- content -}}
-{#    {{ content.avatar }}#}
   {% endif %}
-</article>
+</div>
+
+{#{% if content %}#}
+{#  <div{{ attributes.addClass('container') }}>#}
+{#    {{ label }}#}
+{#    <a href="{{ url }}">#}
+{#        {{ content.avatar }}#}
+{#    </a>#}
+{#    {{ content.feedback }}#}
+{#  </div>#}
+{#{% endif %}#}
