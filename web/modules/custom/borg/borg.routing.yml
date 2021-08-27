@@ -37,3 +37,11 @@ entity.borg.collection:
     _title: 'List content'
   requirements:
     _permission: 'access content'
+
+entity.borg.controller:
+  path: '/borg/all'
+  defaults:
+    _controller: 'Drupal\borg\Controller\BorgController::allOutput'
+    _title: 'List controller'
+  requirements:
+    _permission: 'access content'

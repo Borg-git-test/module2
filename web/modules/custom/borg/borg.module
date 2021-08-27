@@ -15,8 +15,8 @@ function borg_theme() {
     'borg' => [
       'render element' => 'elements',
     ],
-    'add' => [
-      'render element' => 'elements',
+    'all' => [
+      'variables' => ['form' => [], 'element' => [],],
     ],
   ];
 }

@@ -80,10 +80,10 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setTranslatable(TRUE)
       ->setLabel(t('User name'))
-      ->setDescription(t('maximum value 100; minimum value 2;'))
+      ->setDescription(t('maximum name value 100 minimum name value 2'))
       ->setRequired(TRUE)
       ->setDefaultValue(NULL)
-      ->setSetting('max_length', 255)
+      ->setSetting('max_length', 100)
       ->addPropertyConstraints('value', [
         'Length' => [
           'max' => 100,
@@ -133,9 +133,15 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setDescription(t('Your email'))
       ->setSetting('max_length', 255)
       ->setRequired(TRUE)
+      ->addPropertyConstraints('value', [
+        'Regex' => [
+          'pattern' => '/^[0-9A-Za-z._-]+@[0-9A-Za-z.-]+\.[A-Za-z]{2,4}$/',
+          'message' => 'Your email is invalid',
+        ],
+      ])
       ->setDisplayOptions('form', [
         'type' => 'email_default',
-        'weight' => 0,
+        'weight' => 5,
         'settings' => [
           'placeholder' => 'email.mail@mail.com',
         ],
@@ -144,7 +150,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'email_mailto',
-        'weight' => 0,
+        'weight' => 5,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -156,9 +162,15 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
         'max_length' => 25,
       ])
       ->setRequired(TRUE)
+      ->addPropertyConstraints('value', [
+        'Regex' => [
+          'pattern' => '/^[0-9]{10,11}$/',
+          'message' => 'your telephone is invalid',
+        ],
+      ])
       ->setDisplayOptions('form', [
         'type' => 'telephone_default',
-        'weight' => 0,
+        'weight' => 10,
         'settings' => [
           'placeholder' => '0997548675',
         ],
@@ -167,7 +179,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'telephone_link',
-        'weight' => 0,
+        'weight' => 10,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -179,13 +191,13 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ->setSetting('max_length', 550)
       ->setDisplayOptions('form', [
         'type' => 'string_textarea',
-        'weight' => 5,
+        'weight' => 25,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'basic_string',
-        'weight' => 5,
+        'weight' => 25,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -204,13 +216,13 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ])
       ->setDisplayOptions('form', [
         'type' => 'image_image',
-        'weight' => 5,
+        'weight' => 15,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'image',
-        'weight' => 5,
+        'weight' => 15,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -224,7 +236,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
           'date_format' => 'custom',
           'custom_date_format' => 'F/j/Y H:i:s',
         ],
-        'weight' => 10,
+        'weight' => 30,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
@@ -331,7 +343,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   public function getDefaultAvatar() {
     return [
       '#theme' => 'image',
-      '#uri' => '/modules/custom/borg/defaultImage/3.jpg',
+      '#uri' => '/modules/custom/borg/defaultImage/1.jpg',
       '#alt' => t('Default avatar.'),
     ];
   }

@@ -105,6 +105,12 @@ class BorgListBuilder extends EntityListBuilder {
     $row['email'] = $entity->email->value;
     $row['telephone'] = $entity->telephone->value;
     $row['feedback'] = $entity->getFeedback();
+//    if (!empty($entity->avatar->target_id)) {
+//      $row['avatar'] = \Drupal::service('renderer')->render($entity->getAvatar());
+//    }
+//    else {
+      $row['avatar'] = NULL;
+//    }
     return $row + parent::buildRow($entity);
   }
 

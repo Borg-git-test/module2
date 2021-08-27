@@ -2,6 +2,9 @@
 
 namespace Drupal\borg\Form;
 
+use Drupal\Core\Ajax\AjaxResponse;
+use Drupal\Core\Ajax\CssCommand;
+use Drupal\Core\Ajax\HtmlCommand;
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -18,35 +21,133 @@ class BorgForm extends ContentEntityForm {
     $form = parent::buildForm($form, $form_state);
 //    $entity = $this->entity;
 
-    $form['name']['widget'][0]['value']['#ajax'] = [
-      'callback' => '::nameValid',
-      'event' => 'change',
-    ];
     $form['message_name'] = [
-      '#type' => 'markup',
       '#markup' => '<div class="message_name"></div>',
+      '#weight' => '-11',
     ];
-    $form['email']['widget'][0]['value']['#ajax'] = [
-      'callback' => '::emailValid',
+    $form['name']['widget'][0]['value']['#ajax'] = [
+      'callback' => '::NameValidate',
       'event' => 'change',
     ];
     $form['message_email'] = [
-      '#type' => 'markup',
       '#markup' => '<div class="message_email"></div>',
+      '#weight' => '4',
     ];
-    $form['telephone']['widget'][0]['value']['#ajax'] = [
-      'callback' => '::telephoneValid',
+    $form['email']['widget'][0]['value']['#ajax'] = [
+      'callback' => '::EmailValidate',
       'event' => 'change',
     ];
     $form['message_telephone'] = [
-      '#type' => 'markup',
       '#markup' => '<div class="message_telephone"></div>',
+      '#weight' => '9',
+    ];
+    $form['telephone']['widget'][0]['value']['#ajax'] = [
+      'callback' => '::TelephoneValidate',
+      'event' => 'change',
     ];
 
-//    $form['telephone']['widget'][0]['value']['#attributes'] = ["pattern" => "[0-9]{10,11}"];
-//    $form['avatar']['widget'][0]['#alt'] = "image not found";
-
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function NameValidate(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+    $min = 2;
+    $max = 100;
+    $current = strlen($form_state->getValue('name')[0]['value']);
+    $selector = '.form-text';
+    $cssinvalid = [
+      'box-shadow' => '0 0 10px 1px red',
+    ];
+    $cssvalid = [
+      'box-shadow' => 'inherit',
+    ];
+
+    if ($max < $current) {
+      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_name',
+        '<div class="invalid_form_message">' . $this->t('maximum symbols: 100') . '</div>'));
+    }
+    elseif ($current < $min) {
+      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_name',
+        '<div class="invalid_form_message">' . $this->t('minimum symbols: 2') . '</div>'));
+    }
+    else {
+      $response->addCommand(new CssCommand($selector, $cssvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_name',
+        '<div class="valid_form_message"></div>'));
+    }
+    return $response;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function EmailValidate(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+
+    $mail = $form_state->getValue('email')[0]['value'];
+    $email_exp = '/^[0-9A-Za-z._-]+@[0-9A-Za-z.-]+\.[A-Za-z]{2,4}$/';
+
+    $selector = '.form-email';
+    $cssinvalid = [
+      'box-shadow' => '0 0 10px 1px red',
+    ];
+    $cssvalid = [
+      'box-shadow' => 'inherit',
+    ];
+
+    if (!preg_match($email_exp, $mail)) {
+      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_email',
+        '<div class="invalid_form_message">' . $this->t('Your email is invalid') . '</div>'));
+    }
+    else {
+      $response->addCommand(new CssCommand($selector, $cssvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_email',
+        '<div class="valid_form_message"></div>'));
+    }
+    return $response;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function TelephoneValidate(array &$form, FormStateInterface $form_state) {
+    $response = new AjaxResponse();
+
+    $telephone = $form_state->getValue('telephone')[0]['value'];
+    $telephone_exp = '/^[0-9]{10,11}$/';
+
+    $selector = '.form-tel';
+    $cssinvalid = [
+      'box-shadow' => '0 0 10px 1px red',
+    ];
+    $cssvalid = [
+      'box-shadow' => 'inherit',
+    ];
+
+    if (!preg_match($telephone_exp, $telephone)) {
+      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_telephone',
+        '<div class="invalid_form_message">' . $this->t('Your telephone is invalid') . '</div>'));
+    }
+    else {
+      $response->addCommand(new CssCommand($selector, $cssvalid));
+      $response->addCommand(new HtmlCommand(
+        '.message_telephone',
+        '<div class="valid_form_message"></div>'));
+    }
+    return $response;
   }
 
   /**
@@ -69,8 +170,8 @@ class BorgForm extends ContentEntityForm {
       $this->messenger()->addStatus($this->t('The feedback %label has been updated.', $message_arguments));
       $this->logger('borg')->notice('Updated new feedback %label.', $logger_arguments);
     }
-
-    $form_state->setRedirect('entity.borg.canonical', ['borg' => $entity->id()]);
+    $form_state->setRedirect('entity.borg.collection');
+//    $form_state->setRedirect('entity.borg.canonical', ['borg' => $entity->id()]);
   }
 
 }
