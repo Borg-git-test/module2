@@ -75,8 +75,7 @@ class DeleteButton extends ContentEntityConfirmFormBase {
 
     $message = ['%label' => $this->entity->label()];
     $this->messenger()->addMessage($this->t("Feedback %label successfully deleted", $message));
-    $form_state->setRedirect('entity.borg.collection');
-
+    $form_state->setRedirect('entity.borg.controller');
   }
 
 }

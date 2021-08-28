@@ -19,7 +19,6 @@ class BorgForm extends ContentEntityForm {
   public function buildForm(array $form, FormStateInterface $form_state) {
     /* @var $entity \Drupal\borg\Entity\Borg */
     $form = parent::buildForm($form, $form_state);
-//    $entity = $this->entity;
 
     $form['message_name'] = [
       '#markup' => '<div class="message_name"></div>',
@@ -27,6 +26,7 @@ class BorgForm extends ContentEntityForm {
     ];
     $form['name']['widget'][0]['value']['#ajax'] = [
       'callback' => '::NameValidate',
+      'disable-refocus' => TRUE,
       'event' => 'change',
     ];
     $form['message_email'] = [
@@ -35,6 +35,7 @@ class BorgForm extends ContentEntityForm {
     ];
     $form['email']['widget'][0]['value']['#ajax'] = [
       'callback' => '::EmailValidate',
+      'disable-refocus' => TRUE,
       'event' => 'change',
     ];
     $form['message_telephone'] = [
@@ -43,6 +44,7 @@ class BorgForm extends ContentEntityForm {
     ];
     $form['telephone']['widget'][0]['value']['#ajax'] = [
       'callback' => '::TelephoneValidate',
+      'disable-refocus' => TRUE,
       'event' => 'change',
     ];
 
@@ -58,30 +60,30 @@ class BorgForm extends ContentEntityForm {
     $max = 100;
     $current = strlen($form_state->getValue('name')[0]['value']);
     $selector = '.form-text';
-    $cssinvalid = [
+    $css_invalid = [
       'box-shadow' => '0 0 10px 1px red',
     ];
-    $cssvalid = [
+    $css_valid = [
       'box-shadow' => 'inherit',
     ];
 
     if ($max < $current) {
-      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new CssCommand($selector, $css_invalid));
       $response->addCommand(new HtmlCommand(
         '.message_name',
-        '<div class="invalid_form_message">' . $this->t('maximum symbols: 100') . '</div>'));
+        '<div class="invalid_form_message">' . $this->t('Maximum symbols: 100') . '</div>'));
     }
     elseif ($current < $min) {
-      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new CssCommand($selector, $css_invalid));
       $response->addCommand(new HtmlCommand(
         '.message_name',
-        '<div class="invalid_form_message">' . $this->t('minimum symbols: 2') . '</div>'));
+        '<div class="invalid_form_message">' . $this->t('Minimum symbols: 2') . '</div>'));
     }
     else {
-      $response->addCommand(new CssCommand($selector, $cssvalid));
+      $response->addCommand(new CssCommand($selector, $css_valid));
       $response->addCommand(new HtmlCommand(
         '.message_name',
-        '<div class="valid_form_message"></div>'));
+        '<div class="valid_form_message">' . $this->t('Your name is valid') . '</div>'));
     }
     return $response;
   }
@@ -96,24 +98,24 @@ class BorgForm extends ContentEntityForm {
     $email_exp = '/^[0-9A-Za-z._-]+@[0-9A-Za-z.-]+\.[A-Za-z]{2,4}$/';
 
     $selector = '.form-email';
-    $cssinvalid = [
+    $css_invalid = [
       'box-shadow' => '0 0 10px 1px red',
     ];
-    $cssvalid = [
+    $css_valid = [
       'box-shadow' => 'inherit',
     ];
 
     if (!preg_match($email_exp, $mail)) {
-      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new CssCommand($selector, $css_invalid));
       $response->addCommand(new HtmlCommand(
         '.message_email',
         '<div class="invalid_form_message">' . $this->t('Your email is invalid') . '</div>'));
     }
     else {
-      $response->addCommand(new CssCommand($selector, $cssvalid));
+      $response->addCommand(new CssCommand($selector, $css_valid));
       $response->addCommand(new HtmlCommand(
         '.message_email',
-        '<div class="valid_form_message"></div>'));
+        '<div class="valid_form_message">' . $this->t('Your email is valid') . '</div>'));
     }
     return $response;
   }
@@ -128,24 +130,24 @@ class BorgForm extends ContentEntityForm {
     $telephone_exp = '/^[0-9]{10,11}$/';
 
     $selector = '.form-tel';
-    $cssinvalid = [
+    $css_invalid = [
       'box-shadow' => '0 0 10px 1px red',
     ];
-    $cssvalid = [
+    $css_valid = [
       'box-shadow' => 'inherit',
     ];
 
     if (!preg_match($telephone_exp, $telephone)) {
-      $response->addCommand(new CssCommand($selector, $cssinvalid));
+      $response->addCommand(new CssCommand($selector, $css_invalid));
       $response->addCommand(new HtmlCommand(
         '.message_telephone',
         '<div class="invalid_form_message">' . $this->t('Your telephone is invalid') . '</div>'));
     }
     else {
-      $response->addCommand(new CssCommand($selector, $cssvalid));
+      $response->addCommand(new CssCommand($selector, $css_valid));
       $response->addCommand(new HtmlCommand(
         '.message_telephone',
-        '<div class="valid_form_message"></div>'));
+        '<div class="valid_form_message">' . $this->t('Your telephone is valid') . '</div>'));
     }
     return $response;
   }
@@ -170,7 +172,7 @@ class BorgForm extends ContentEntityForm {
       $this->messenger()->addStatus($this->t('The feedback %label has been updated.', $message_arguments));
       $this->logger('borg')->notice('Updated new feedback %label.', $logger_arguments);
     }
-    $form_state->setRedirect('entity.borg.collection');
+    $form_state->setRedirect('entity.borg.controller');
 //    $form_state->setRedirect('entity.borg.canonical', ['borg' => $entity->id()]);
   }
 

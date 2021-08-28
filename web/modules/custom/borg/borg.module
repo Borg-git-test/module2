@@ -18,6 +18,9 @@ function borg_theme() {
     'all' => [
       'variables' => ['form' => [], 'element' => [],],
     ],
+    'buttons' => [
+      'variables' => ['id' => [], 'delete' => [], 'edit' => [],],
+    ],
   ];
 }
 
@@ -39,23 +42,36 @@ function template_preprocess_borg(array &$variables) {
 
 //  /** @var ArtworkInterface $entity */
   $entity = $variables['elements']['#borg'];
-  //provide the label
-  $variables['label'] = $entity->label();
-  //provide the alias
-  $variables['url'] = $entity->toUrl()->toString();
+  //provide the alias user
+  $variables['user'] = $entity->getOwnerId();
+  //provide the id entity
+  $variables['id'] = $entity->id();
 
-//  $variables['content']['telephone'] = $entity->getTelephone();
+    $delete = [
+      '#type' => 'submit',
+      '#value' => 'Delete',
+      '#attributes' => [
+        'class' => ['btn-danger'],
+      ],
+    ];
+    $edit = [
+      '#type' => 'submit',
+      '#value' => 'Edit',
+      '#attributes' => [
+        'class' => ['btn-warning'],
+      ],
+    ];
 
+  $variables['buttons'] = [
+    '#theme' => 'buttons',
+    '#id' => $entity->id(),
+    '#delete' => $delete,
+    '#edit' => $edit,
+  ];
+  //provide the Default Avatar
   if (empty($entity->avatar->target_id)) {
     $variables['content']['avatar'] = $entity->getDefaultAvatar();
   }
 
-
-//  if (is_null($entity->getAvatar())) {
-//    $variables['content']['avatar'] = [
-//      '#theme' => 'image',
-//      '#uri' => $entity->getDefaultAvatar(),
-//      '#alt' => t('Default Guest avatar.'),
-//    ];
-//  }
+  $variables['#attached']['library'][] = 'borg/borg';
 }

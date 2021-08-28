@@ -36,7 +36,7 @@ entity.borg.collection:
     _entity_list: 'borg'
     _title: 'List content'
   requirements:
-    _permission: 'access content'
+    _permission: 'administer borg'
 
 entity.borg.controller:
   path: '/borg/all'

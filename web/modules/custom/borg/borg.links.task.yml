@@ -19,8 +19,14 @@ entity.borg.delete_form:
   base_route: entity.borg.canonical
   weight: 10
 
-#entity.borg.collection:
-#  title: borg
-#  route_name: entity.borg.collection
-#  base_route: system.admin_content
-#  weight: 10
+entity.borg.collection:
+  title: collection
+  route_name: entity.borg.collection
+  base_route: system.admin_content
+  weight: 10
+
+entity.borg.controller:
+  title: controller
+  route_name: entity.borg.controller
+  base_route: system.admin_content
+  weight: 20

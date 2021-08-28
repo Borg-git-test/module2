@@ -15,12 +15,9 @@
  */
 #}
 
-<div{{ attributes.addClass('all_content') }}>
-  {{ form }}
-{#  {{ element }}#}
-  {% for elements in element %}
-    {{ elements }}
-  {% endfor %}
+<div class="all_content">
+  <div class="form">{{ form }}</div>
+  <div class="container">{{ element }}</div>
 </div>
 
 

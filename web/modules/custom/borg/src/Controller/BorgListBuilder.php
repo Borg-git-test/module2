@@ -99,7 +99,7 @@ class BorgListBuilder extends EntityListBuilder {
       '#theme' => 'username',
       '#account' => $entity->getOwner(),
     ];
-    $row['created'] = $this->dateFormatter->format($entity->getCreatedTime(), 'custom', 'F/j/Y H:i:s');
+    $row['created'] = $this->dateFormatter->format($entity->getCreatedTime(), 'custom', 'm/j/Y H:i:s');
 //    $row['created'] = date('j/F/Y H:i:s', $entity->getCreatedTime());
     $row['name'] = $entity->toLink($entity->getName());
     $row['email'] = $entity->email->value;

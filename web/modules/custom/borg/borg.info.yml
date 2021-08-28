@@ -1,7 +1,7 @@
 name: borg
 type: module
 description: 'Provides a borg entity.'
-package: Custom
+package: borg
 core: 8.x
 core_version_requirement: ^8 || ^9
 dependencies:
@@ -9,3 +9,4 @@ dependencies:
   - drupal:telephone
   - drupal:image
 configure: entity.borg.settings
+

@@ -18,6 +18,7 @@ use Drupal\user\UserInterface;
  *   label = @Translation("Your feedback"),
  *   label_collection = @Translation("Feedbacks"),
  *   handlers = {
+ *   "access" = "Drupal\Core\Entity\EntityAccessControlHandler",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\borg\Controller\BorgListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
@@ -79,7 +80,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setTranslatable(TRUE)
-      ->setLabel(t('User name'))
+      ->setLabel(t('User name:'))
       ->setDescription(t('maximum name value 100 minimum name value 2'))
       ->setRequired(TRUE)
       ->setDefaultValue(NULL)
@@ -117,19 +118,25 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       ])
       ->setDisplayOptions('form', [
         'type' => 'image_image',
+        'settings' => [
+          'preview_image_style' => 'medium',
+        ],
         'weight' => 0,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'image',
+        'settings' => [
+          'image_style' => 'medium',
+        ],
         'weight' => 0,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['email'] = BaseFieldDefinition::create('email')
       ->setTranslatable(TRUE)
-      ->setLabel(t('User email'))
+      ->setLabel(t('User email:'))
       ->setDescription(t('Your email'))
       ->setSetting('max_length', 255)
       ->setRequired(TRUE)
@@ -156,7 +163,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
 
     $fields['telephone'] = BaseFieldDefinition::create('telephone')
       ->setTranslatable(TRUE)
-      ->setLabel(t('User telephone'))
+      ->setLabel(t('User telephone:'))
       ->setDescription(t('Your telephone'))
       ->setSettings([
         'max_length' => 25,
@@ -185,7 +192,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
 
     $fields['feedback'] = BaseFieldDefinition::create('string_long')
       ->setTranslatable(TRUE)
-      ->setLabel(t('User feedback'))
+      ->setLabel(t('User feedback:'))
       ->setDescription(t('Your feedback'))
       ->setRequired(TRUE)
       ->setSetting('max_length', 550)
@@ -210,31 +217,35 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
         'alt_field' => FALSE,
         'file_extensions' => 'png jpg jpeg',
         'max_filesize' => 5242880,
-        'default_image' => [
-          'alt' => 'image not found',
-        ],
       ])
       ->setDisplayOptions('form', [
         'type' => 'image_image',
+        'settings' => [
+          'preview_image_style' => 'medium',
+        ],
         'weight' => 15,
       ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'image',
+        'settings' => [
+          'image_style' => 'large',
+          'image_link' => 'file',
+        ],
         'weight' => 15,
       ])
       ->setDisplayConfigurable('view', TRUE);
 
     $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
+      ->setLabel(t('Created:'))
       ->setTranslatable(TRUE)
       ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'timestamp',
         'settings' => [
           'date_format' => 'custom',
-          'custom_date_format' => 'F/j/Y H:i:s',
+          'custom_date_format' => 'm/j/Y H:i:s',
         ],
         'weight' => 30,
       ])
@@ -277,6 +288,13 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
    */
   public function getOwner() {
     return $this->get('uid')->entity;
+  }
+
+  /**
+   * Get user id.
+   */
+  public function getOwnerId() {
+    return $this->get('uid')->target_id;
   }
 
   /**
@@ -345,6 +363,9 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
       '#theme' => 'image',
       '#uri' => '/modules/custom/borg/defaultImage/1.jpg',
       '#alt' => t('Default avatar.'),
+      '#attributes' => [
+        'style' => 'width: 220px',
+      ],
     ];
   }
 

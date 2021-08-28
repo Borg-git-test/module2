@@ -15,21 +15,34 @@
  */
 #}
 {% if content %}
-<div{{ attributes.addClass('container') }}>
-    {{ content.name }}
-    {{ content.avatar }}
-    {{ content.email }}
-    {{ content.telephone }}
-    {{ content.feedback }}
-    {{ content.image }}
-    {{ content.created }}
+<div class="element row">
+  <div class="flex">
+  <div class="user_data col-lg-2 col-md-2 col-sm-4 col-xs-12">
+    <div class="user_name">
+      <div class="image"><a href="/user/{{ user }}">{{ content.avatar }}</a></div>
+      <div class="name"><a href="/user/{{ user }}">{{ content.name }}</a></div>
+    </div>
+    <div class="time">{{ content.created }}</div>
+  </div>
+  <div class="user_contact col-lg-4 col-md-4 col-sm-8 col-xs-12">
+    <p class="contact">{{ 'Contact with me'|t }}</p>
+    <div class="email"><span>My email: </span>{{ content.email }}</div>
+    <div class="telephone"><span>My telephone: </span>{{ content.telephone }}</div>
+
+{#    {% if user.hasPermission('administer node') %}#}
+{#    {% if user.hasPermission('administer borg') %}#}
+{#    <div class="buttons">#}
+{#      <a href="/borg/{{ id }}/delete">{{ delete }}</a>#}
+{#      <a href="/borg/{{ id }}/edit">{{ edit }}</a>#}
+{#    </div>#}
+{#    {% endif %}#}
+    {{ buttons }}
+
+  </div>
+  </div>
+  <div class="user_feedback col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="image">{{ content.image }}</div>
+    <div class="feedback">{{ content.feedback }}</div>
+  </div>
 </div>
 {% endif %}
-
-
-
-{#<div{{ attributes.addClass('container') }}>#}
-{#  {% if content %}#}
-{#        {{- content -}}#}
-{#  {% endif %}#}
-{#</div>#}

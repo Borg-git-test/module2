@@ -1,0 +1,120 @@
+.all_content {
+  .form {
+    margin-block: 20px;
+  }
+    .invalid_form_message, .valid_form_message {
+      background-color: #f2dede;
+      color: #a94442;
+      padding: 10px;
+      border-radius: 5px;
+      margin-block: 10px;
+    }
+    .valid_form_message {
+      background-color: #dff0d8;
+      color: #3c763d;
+    }
+    .input-group-addon {
+      display: none;
+    }
+    .message_telephone, .message_email, .message_name {
+      width: 100%;
+      text-align: center;
+    }
+
+.input-group {
+  width: 100%;
+  .form-control, .form-control:first-child {
+    width: 100%;
+    border-radius: 4px;
+  }
+  .control-label {
+    margin-bottom: 5px;
+  }
+}
+  .button {outline: none}
+
+
+  .element {
+    margin-block: 50px;
+    .flex {
+      display: flex;
+      justify-content: center;
+    }
+    .user_data {
+      .user_name {
+        position: relative;
+
+        .image {
+          display: flex;
+          justify-content: center;
+        }
+
+        .name {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          text-align: center;
+          overflow-wrap: break-word;
+          text-transform: uppercase;
+          font-size: large;
+          font-weight: bold;
+          background: rgba(0, 0, 0, 0.3);
+          border-radius: 5px;
+
+          a {
+            color: white;
+            text-decoration: none;
+          }
+        }
+      }
+      .time {
+        text-align: center;
+        background: #0071b3;
+        color: whitesmoke;
+        border-radius: 4px;
+      }
+    }
+    .user_contact {
+      .contact, .email, .telephone {
+        margin-bottom: 0;
+        font-size: 16px;
+        .field {display: inline-block}
+        a {text-decoration: none}
+      }
+      .buttons {
+        margin-top: 10px;
+        .button {outline: none}
+        a {text-decoration: none}
+      }
+    }
+    .user_feedback {
+      margin-top: 20px;
+      .image {
+        margin: 0 20px 20px 0;
+        float: left;
+      }
+      .feedback {
+        text-align: justify;
+      }
+    }
+  }
+}
+
+
+//.button {outline: none !important;}
+//.message_telephone, .message_email, .message_name {
+//  width: 100%;
+//  text-align: center;
+//}
+//
+//.input-group {
+//  width: 100%;
+//  .form-control, .form-control:first-child {
+//    width: 100%;
+//    border-radius: 4px;
+//  }
+//  .control-label {
+//    margin-bottom: 5px;
+//  }
+//}
