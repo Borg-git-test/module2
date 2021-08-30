@@ -1,24 +1,14 @@
 {#
 /**
  * @file
- * Default theme implementation to present a borg entity.
+ * Theme implementation to present a buttons to delete and edit.
  *
- * This template is used when viewing a registered borg's page,
- * e.g., /admin/content/borg)/123. 123 being the borg's ID.
- *
- * Available variables:
- * - content: A list of content items. Use 'content' to print all content, or
- *   print a subset such as 'content.title'.
- * - attributes: HTML attributes for the container element.
- *
- * @see template_preprocess_borg()
  */
 #}
-
-    {% if user.hasPermission('administer borg') %}
-    <div class="buttons">
-      <a href="/borg/{{ id }}/delete">{{ delete }}</a>
-      <a href="/borg/{{ id }}/edit">{{ edit }}</a>
-    </div>
-    {% endif %}
+{% if user.hasPermission('administer borg') %}
+  <div class="buttons">
+    <a href="/borg/{{ id }}/delete">{{ delete }}</a>
+    <a href="/borg/{{ id }}/edit">{{ edit }}</a>
+  </div>
+{% endif %}
 

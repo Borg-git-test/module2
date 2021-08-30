@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Configuration form for a borg entity type.
+ * Configuration form for a comment entity type.
  */
 class BorgSettingsForm extends FormBase {
 
@@ -23,7 +23,7 @@ class BorgSettingsForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
 
     $form['settings'] = [
-      '#markup' => $this->t('Settings form for a borg entity type.'),
+      '#markup' => $this->t('Settings form for user comments.'),
     ];
 
     $form['actions'] = [

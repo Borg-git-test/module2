@@ -39,14 +39,11 @@ function borg_preprocess_borg(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
-
-//  /** @var ArtworkInterface $entity */
+  //chosen the template
   $entity = $variables['elements']['#borg'];
-  //provide the alias user
+  //get the user id
   $variables['user'] = $entity->getOwnerId();
-  //provide the id entity
-  $variables['id'] = $entity->id();
-
+  //create the Delete button
     $delete = [
       '#type' => 'submit',
       '#value' => 'Delete',
@@ -54,6 +51,7 @@ function borg_preprocess_borg(array &$variables) {
         'class' => ['btn-danger'],
       ],
     ];
+  //create the Edit button
     $edit = [
       '#type' => 'submit',
       '#value' => 'Edit',
@@ -61,20 +59,21 @@ function borg_preprocess_borg(array &$variables) {
         'class' => ['btn-warning'],
       ],
     ];
-
+  //get buttons from template
   $variables['buttons'] = [
     '#theme' => 'buttons',
     '#id' => $entity->id(),
     '#delete' => $delete,
     '#edit' => $edit,
   ];
-  //provide the Default Avatar
+  //create the Default Avatar
   if (empty($entity->avatar->target_id)) {
     $variables['content']['avatar'] = $entity->getDefaultAvatar();
   }
 
 }
 
+//include the css library
 function borg_page_attachments(array &$attachments) {
   $attachments['#attached']['library'][] = 'borg/borg';
 }

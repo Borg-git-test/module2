@@ -20,7 +20,7 @@ entity.borg.delete_form:
   weight: 10
 
 entity.borg.controller:
-  title: controller
+  title: User comments
   route_name: entity.borg.controller
   base_route: system.admin_content
   weight: 20

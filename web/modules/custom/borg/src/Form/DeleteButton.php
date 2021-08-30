@@ -18,13 +18,14 @@ class DeleteButton extends ContentEntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getQuestion() {
-    return $this->t('Do you want to delete %id', ['%id' => $this->entity->label()]);
+    return $this->t('Do really you want to delete this comment');
   }
 
   /**
    * {@inheritdoc}
    */
   public function getCancelUrl() {
+    // Redirect to previous page.
     return Url::fromUri($_SERVER["HTTP_REFERER"]);
   }
 
@@ -55,8 +56,9 @@ class DeleteButton extends ContentEntityConfirmFormBase {
    * Delete the entity and log the event. logger() replaces the watchdog.
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
+    // Get entity.
     $entity = $this->getEntity();
+    // Delete image.
     if (!empty($entity->avatar->target_id)) {
       $file = File::load($entity->avatar->target_id);
       $file->delete();
@@ -65,6 +67,7 @@ class DeleteButton extends ContentEntityConfirmFormBase {
       $file = File::load($entity->image->target_id);
       $file->delete();
     }
+    // Delete entity.
     $entity->delete();
 
     $this->logger('borg')->notice('@type: deleted %title.',
@@ -73,8 +76,9 @@ class DeleteButton extends ContentEntityConfirmFormBase {
         '%title' => $this->entity->label(),
       ]);
 
+    // Create message and redirect to controller.
     $message = ['%label' => $this->entity->label()];
-    $this->messenger()->addMessage($this->t("Feedback %label successfully deleted", $message));
+    $this->messenger()->addMessage($this->t("%label your comment successfully deleted", $message));
     $form_state->setRedirect('entity.borg.controller');
   }
 

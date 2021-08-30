@@ -7,9 +7,9 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class MyCSVReport.
+ * Form controller for the add form and created comments with pager.
  *
- * @package Drupal\my_module\Controller
+ * @package Drupal\borg\Controller
  */
 class BorgController extends ControllerBase implements ContainerInjectionInterface {
 
@@ -19,7 +19,7 @@ class BorgController extends ControllerBase implements ContainerInjectionInterfa
   private $entityBuilder;
 
   /**
-   * Creates entity.
+   * Created entity.
    */
   public static function create(ContainerInterface $container) {
     $content = parent::create($container);
@@ -29,7 +29,7 @@ class BorgController extends ControllerBase implements ContainerInjectionInterfa
   }
 
   /**
-   * Build form.
+   * Building the form.
    */
   public function buildForm() {
     $entity = $this->entityBuilder
@@ -42,29 +42,30 @@ class BorgController extends ControllerBase implements ContainerInjectionInterfa
   }
 
   /**
-   * Building the form.
+   * Building the entity comments in massive.
    */
   public function buildRow() {
     $comments = [];
-    $i = 0;
 
+    // Add pager and sort on created time.
     $query = \Drupal::entityTypeManager()->getStorage('borg')->getQuery()
       ->sort('created', 'DESC')
       ->pager(5);
     $entity_ids = $query->execute();
 
+    // Get entity comments.
     $storage = \Drupal::entityTypeManager()->getStorage('borg')->loadMultiple($entity_ids);
     $view = \Drupal::entityTypeManager()->getViewBuilder('borg');
 
+    // Record entity comments in massive.
     foreach ($storage as $key) {
-      $comments[$i] = $view->view($key, 'teaser');
-      $i++;
+      $comments[] = $view->view($key, 'teaser');
     }
     return $comments;
   }
 
   /**
-   * Output form and all comments.
+   * Output form and all comments with pager.
    */
   public function allOutput() {
     $row = [$this->buildRow()];

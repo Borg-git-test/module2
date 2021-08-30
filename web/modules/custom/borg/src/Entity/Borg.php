@@ -8,7 +8,6 @@ use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
-use Drupal\user\UserInterface;
 
 /**
  * Defines the borg entity class.
@@ -56,7 +55,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   /**
    * {@inheritdoc}
    *
-   * When a new borg entity is created, set the uid entity reference to
+   * When a new comment is created, set the uid entity reference to
    * the current user as the creator of the entity.
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
@@ -253,21 +252,6 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
-   * Get user Name.
-   */
-  public function getName() {
-    return $this->get('name')->value;
-  }
-
-  /**
-   * Set user Name.
-   */
-  public function setName($name) {
-    $this->set('name', $name);
-    return $this;
-  }
-
-  /**
    * Get created time.
    */
   public function getCreatedTime() {
@@ -282,7 +266,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
-   * Get user id.
+   * Get user uid.
    */
   public function getOwner() {
     return $this->get('uid')->entity;
@@ -296,65 +280,7 @@ class Borg extends ContentEntityBase implements ContentEntityInterface {
   }
 
   /**
-   * Set user id.
-   */
-  public function setOwner(UserInterface $account) {
-    return $this->set('uid', $account->id());
-  }
-
-  /**
-   * Get user feedback.
-   */
-  public function getFeedback() {
-    return $this->get('feedback')->value;
-  }
-
-  /**
-   * Set guest feedback message.
-   */
-  public function setFeedback($feedback, $format) {
-    return $this->set('feedback', [
-      'value' => $feedback,
-      'format' => $format,
-    ]);
-  }
-
-  /**
-   * Get user email.
-   */
-  public function getEmail() {
-    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('email'), [
-      'label' => 'hidden',
-      'type' => 'email_mailto',
-    ]);
-  }
-
-  /**
-   * Get user telephone.
-   */
-  public function getTelephone() {
-    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('telephone'), [
-      'label' => 'hidden',
-      'type' => 'telephone_link',
-    ]);
-  }
-
-  /**
-   * Get user avatar.
-   */
-  public function getAvatar() {
-    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('avatar'), ['label' => 'hidden']);
-  }
-
-  /**
-   * Get user feedback image.
-   */
-  public function getFeedbackImage() {
-    return \Drupal::entityTypeManager()->getViewBuilder('borg')->viewField($this->get('image'), ['label' => 'hidden']);
-  }
-
-  /**
-   * Get Default image Avatar.
+   * Get Default Avatar image.
    */
   public function getDefaultAvatar() {
     return [

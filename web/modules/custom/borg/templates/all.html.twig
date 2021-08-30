@@ -1,20 +1,12 @@
 {#
 /**
  * @file
- * Default theme implementation to present a borg entity.
+ * Default theme implementation to present controller.
  *
- * This template is used when viewing a registered borg's page,
- * e.g., /admin/content/borg)/123. 123 being the borg's ID.
+ * This template is used when viewing form and comments with pager
  *
- * Available variables:
- * - content: A list of content items. Use 'content' to print all content, or
- *   print a subset such as 'content.title'.
- * - attributes: HTML attributes for the container element.
- *
- * @see template_preprocess_borg()
  */
 #}
-{#{{ attach_library('borg/borg') }}#}
 <div class="all_content">
   <div class="form">{{ form }}</div>
   <div class="container">{{ element }}</div>

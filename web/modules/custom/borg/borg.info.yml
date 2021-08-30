@@ -1,6 +1,6 @@
 name: borg
 type: module
-description: 'Provides a borg entity.'
+description: 'Provides a user comments.'
 package: borg
 core: 8.x
 core_version_requirement: ^8 || ^9

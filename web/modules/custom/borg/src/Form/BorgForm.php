@@ -9,7 +9,7 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Form controller for the borg entity edit forms.
+ * Form controller for the add and edit form.
  */
 class BorgForm extends ContentEntityForm {
 
@@ -17,7 +17,6 @@ class BorgForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var $entity \Drupal\borg\Entity\Borg */
     $form = parent::buildForm($form, $form_state);
 
     $form['message_name'] = [
@@ -51,9 +50,7 @@ class BorgForm extends ContentEntityForm {
     return $form;
   }
 
-  /**
-   * {@inheritdoc}
-   */
+  // Ajax validation for name field.
   public function NameValidate(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
     $min = 2;
@@ -88,9 +85,7 @@ class BorgForm extends ContentEntityForm {
     return $response;
   }
 
-  /**
-   * {@inheritdoc}
-   */
+  // Ajax validation for email field.
   public function EmailValidate(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
 
@@ -120,9 +115,7 @@ class BorgForm extends ContentEntityForm {
     return $response;
   }
 
-  /**
-   * {@inheritdoc}
-   */
+  // Ajax validation for telephone field.
   public function TelephoneValidate(array &$form, FormStateInterface $form_state) {
     $response = new AjaxResponse();
 
@@ -156,24 +149,25 @@ class BorgForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-
+    // Get and save entity.
     $entity = $this->getEntity();
     $result = $entity->save();
     $link = $entity->toLink($this->t('View'))->toRenderable();
 
     $message_arguments = ['%label' => $this->entity->label()];
     $logger_arguments = $message_arguments + ['link' => render($link)];
-
+    // If comment created.
     if ($result == SAVED_NEW) {
       $this->messenger()->addStatus($this->t('New feedback %label has been created.', $message_arguments));
       $this->logger('borg')->notice('Created new feedback %label', $logger_arguments);
     }
+    // If comment updated.
     else {
       $this->messenger()->addStatus($this->t('The feedback %label has been updated.', $message_arguments));
       $this->logger('borg')->notice('Updated new feedback %label.', $logger_arguments);
     }
+    // Redirect to controller after create or edit comment.
     $form_state->setRedirect('entity.borg.controller');
-//    $form_state->setRedirect('entity.borg.canonical', ['borg' => $entity->id()]);
   }
 
 }
