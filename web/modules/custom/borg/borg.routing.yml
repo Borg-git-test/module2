@@ -30,16 +30,8 @@ entity.borg.canonical:
   requirements:
     _permission: 'access content'
 
-entity.borg.collection:
-  path: '/borg'
-  defaults:
-    _entity_list: 'borg'
-    _title: 'List content'
-  requirements:
-    _permission: 'administer borg'
-
 entity.borg.controller:
-  path: '/borg/all'
+  path: '/borg'
   defaults:
     _controller: 'Drupal\borg\Controller\BorgController::allOutput'
     _title: 'List controller'

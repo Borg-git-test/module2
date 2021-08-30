@@ -20,7 +20,6 @@ use Drupal\user\UserInterface;
  *   handlers = {
  *   "access" = "Drupal\Core\Entity\EntityAccessControlHandler",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\borg\Controller\BorgListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
  *     "form" = {
  *       "add" = "Drupal\borg\Form\BorgForm",
@@ -46,7 +45,6 @@ use Drupal\user\UserInterface;
  *     "canonical" = "/borg/{borg}",
  *     "edit-form" = "/borg/{borg}/edit",
  *     "delete-form" = "/borg/{borg}/delete",
- *     "collection" = "/borg"
  *   },
  *   field_ui_base_route = "entity.borg.settings"
  * )

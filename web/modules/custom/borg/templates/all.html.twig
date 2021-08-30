@@ -14,10 +14,11 @@
  * @see template_preprocess_borg()
  */
 #}
-
+{#{{ attach_library('borg/borg') }}#}
 <div class="all_content">
   <div class="form">{{ form }}</div>
   <div class="container">{{ element }}</div>
+  <div class="pager">{{ pager }}</div>
 </div>
 
 

@@ -1,7 +1,6 @@
-.all_content {
-  .form {
+  form {
     margin-block: 20px;
-  }
+
     .invalid_form_message, .valid_form_message {
       background-color: #f2dede;
       color: #a94442;
@@ -9,30 +8,38 @@
       border-radius: 5px;
       margin-block: 10px;
     }
+
     .valid_form_message {
       background-color: #dff0d8;
       color: #3c763d;
     }
+
     .input-group-addon {
       display: none;
     }
+
     .message_telephone, .message_email, .message_name {
       width: 100%;
       text-align: center;
     }
 
-.input-group {
-  width: 100%;
-  .form-control, .form-control:first-child {
-    width: 100%;
-    border-radius: 4px;
-  }
-  .control-label {
-    margin-bottom: 5px;
-  }
-}
-  .button {outline: none}
+    .input-group {
+      width: 100%;
 
+      .form-control, .form-control:first-child {
+        width: 100%;
+        border-radius: 4px;
+      }
+
+      .control-label {
+        margin-bottom: 5px;
+      }
+    }
+
+    .button {
+      outline: none !important;
+    }
+  }
 
   .element {
     margin-block: 50px;
@@ -99,22 +106,4 @@
       }
     }
   }
-}
 
-
-//.button {outline: none !important;}
-//.message_telephone, .message_email, .message_name {
-//  width: 100%;
-//  text-align: center;
-//}
-//
-//.input-group {
-//  width: 100%;
-//  .form-control, .form-control:first-child {
-//    width: 100%;
-//    border-radius: 4px;
-//  }
-//  .control-label {
-//    margin-bottom: 5px;
-//  }
-//}

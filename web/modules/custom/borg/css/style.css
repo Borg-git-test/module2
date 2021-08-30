@@ -1,52 +1,53 @@
-.all_content .form {
+form {
   margin-block: 20px;
 }
-.all_content .invalid_form_message, .all_content .valid_form_message {
+form .invalid_form_message, form .valid_form_message {
   background-color: #f2dede;
   color: #a94442;
   padding: 10px;
   border-radius: 5px;
   margin-block: 10px;
 }
-.all_content .valid_form_message {
+form .valid_form_message {
   background-color: #dff0d8;
   color: #3c763d;
 }
-.all_content .input-group-addon {
+form .input-group-addon {
   display: none;
 }
-.all_content .message_telephone, .all_content .message_email, .all_content .message_name {
+form .message_telephone, form .message_email, form .message_name {
   width: 100%;
   text-align: center;
 }
-.all_content .input-group {
+form .input-group {
   width: 100%;
 }
-.all_content .input-group .form-control, .all_content .input-group .form-control:first-child {
+form .input-group .form-control, form .input-group .form-control:first-child {
   width: 100%;
   border-radius: 4px;
 }
-.all_content .input-group .control-label {
+form .input-group .control-label {
   margin-bottom: 5px;
 }
-.all_content .button {
-  outline: none;
+form .button {
+  outline: none !important;
 }
-.all_content .element {
+
+.element {
   margin-block: 50px;
 }
-.all_content .element .flex {
+.element .flex {
   display: flex;
   justify-content: center;
 }
-.all_content .element .user_data .user_name {
+.element .user_data .user_name {
   position: relative;
 }
-.all_content .element .user_data .user_name .image {
+.element .user_data .user_name .image {
   display: flex;
   justify-content: center;
 }
-.all_content .element .user_data .user_name .name {
+.element .user_data .user_name .name {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -59,43 +60,43 @@
   background: rgba(0, 0, 0, 0.3);
   border-radius: 5px;
 }
-.all_content .element .user_data .user_name .name a {
+.element .user_data .user_name .name a {
   color: white;
   text-decoration: none;
 }
-.all_content .element .user_data .time {
+.element .user_data .time {
   text-align: center;
   background: #0071b3;
   color: whitesmoke;
   border-radius: 4px;
 }
-.all_content .element .user_contact .contact, .all_content .element .user_contact .email, .all_content .element .user_contact .telephone {
+.element .user_contact .contact, .element .user_contact .email, .element .user_contact .telephone {
   margin-bottom: 0;
   font-size: 16px;
 }
-.all_content .element .user_contact .contact .field, .all_content .element .user_contact .email .field, .all_content .element .user_contact .telephone .field {
+.element .user_contact .contact .field, .element .user_contact .email .field, .element .user_contact .telephone .field {
   display: inline-block;
 }
-.all_content .element .user_contact .contact a, .all_content .element .user_contact .email a, .all_content .element .user_contact .telephone a {
+.element .user_contact .contact a, .element .user_contact .email a, .element .user_contact .telephone a {
   text-decoration: none;
 }
-.all_content .element .user_contact .buttons {
+.element .user_contact .buttons {
   margin-top: 10px;
 }
-.all_content .element .user_contact .buttons .button {
+.element .user_contact .buttons .button {
   outline: none;
 }
-.all_content .element .user_contact .buttons a {
+.element .user_contact .buttons a {
   text-decoration: none;
 }
-.all_content .element .user_feedback {
+.element .user_feedback {
   margin-top: 20px;
 }
-.all_content .element .user_feedback .image {
+.element .user_feedback .image {
   margin: 0 20px 20px 0;
   float: left;
 }
-.all_content .element .user_feedback .feedback {
+.element .user_feedback .feedback {
   text-align: justify;
 }
 /*# sourceMappingURL=style.css.map */

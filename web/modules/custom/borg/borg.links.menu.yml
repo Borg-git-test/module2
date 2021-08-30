@@ -1,10 +1,10 @@
 entity.borg.settings:
-  title: borg
+  title: Settings borg
   description: Configure a borg entity type
   route_name:  entity.borg.settings
   parent: system.admin_structure
-entity.borg.collection:
-  title: borgs
+entity.borg.controller:
+  title: Controller
   description: List of borgs
-  route_name: entity.borg.collection
+  route_name: entity.borg.controller
   parent: system.admin_content

@@ -16,7 +16,7 @@ function borg_theme() {
       'render element' => 'elements',
     ],
     'all' => [
-      'variables' => ['form' => [], 'element' => [],],
+      'variables' => ['form' => [], 'element' => [], 'pager' => [],],
     ],
     'buttons' => [
       'variables' => ['id' => [], 'delete' => [], 'edit' => [],],
@@ -35,7 +35,7 @@ function borg_theme() {
  *     fields attached to the entity.
  *   - attributes: HTML attributes for the containing element.
  */
-function template_preprocess_borg(array &$variables) {
+function borg_preprocess_borg(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
@@ -73,5 +73,8 @@ function template_preprocess_borg(array &$variables) {
     $variables['content']['avatar'] = $entity->getDefaultAvatar();
   }
 
-  $variables['#attached']['library'][] = 'borg/borg';
+}
+
+function borg_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'borg/borg';
 }

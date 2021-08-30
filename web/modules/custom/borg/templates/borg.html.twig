@@ -28,16 +28,7 @@
     <p class="contact">{{ 'Contact with me'|t }}</p>
     <div class="email"><span>My email: </span>{{ content.email }}</div>
     <div class="telephone"><span>My telephone: </span>{{ content.telephone }}</div>
-
-{#    {% if user.hasPermission('administer node') %}#}
-{#    {% if user.hasPermission('administer borg') %}#}
-{#    <div class="buttons">#}
-{#      <a href="/borg/{{ id }}/delete">{{ delete }}</a>#}
-{#      <a href="/borg/{{ id }}/edit">{{ edit }}</a>#}
-{#    </div>#}
-{#    {% endif %}#}
-    {{ buttons }}
-
+      {{ buttons }}
   </div>
   </div>
   <div class="user_feedback col-lg-12 col-md-12 col-sm-12 col-xs-12">

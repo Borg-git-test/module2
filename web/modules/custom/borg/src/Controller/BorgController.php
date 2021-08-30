@@ -47,7 +47,13 @@ class BorgController extends ControllerBase implements ContainerInjectionInterfa
   public function buildRow() {
     $comments = [];
     $i = 0;
-    $storage = \Drupal::entityTypeManager()->getStorage('borg')->loadMultiple();
+
+    $query = \Drupal::entityTypeManager()->getStorage('borg')->getQuery()
+      ->sort('created', 'DESC')
+      ->pager(5);
+    $entity_ids = $query->execute();
+
+    $storage = \Drupal::entityTypeManager()->getStorage('borg')->loadMultiple($entity_ids);
     $view = \Drupal::entityTypeManager()->getViewBuilder('borg');
 
     foreach ($storage as $key) {
@@ -63,11 +69,15 @@ class BorgController extends ControllerBase implements ContainerInjectionInterfa
   public function allOutput() {
     $row = [$this->buildRow()];
     $form = $this->buildForm();
+    $pager = [
+      '#type' => 'pager',
+    ];
 
     return [
       '#theme' => 'all',
       '#form' => $form,
       '#element' => $row,
+      '#pager' => $pager,
     ];
   }
 
