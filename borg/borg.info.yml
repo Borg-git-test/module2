@@ -1,0 +1,12 @@
+name: borg
+type: module
+description: 'Provides a user comments.'
+package: borg
+core: 8.x
+core_version_requirement: ^8 || ^9
+dependencies:
+  - drupal:text
+  - drupal:telephone
+  - drupal:image
+configure: entity.borg.settings
+

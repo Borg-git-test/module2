@@ -1,0 +1,44 @@
+# Settings page
+entity.borg.settings:
+  path: 'admin/structure/borg'
+  defaults:
+    _form: '\Drupal\borg\Form\BorgSettingsForm'
+    _title: 'Settings'
+  requirements:
+    _permission: 'administer borg'
+
+# Delete comment
+entity.borg.delete_form:
+  path: '/borg/{borg}/delete'
+  defaults:
+    _entity_form: borg.delete
+    _title: 'Delete'
+  requirements:
+    _permission: 'administer borg'
+
+# Edit comment
+entity.borg.edit_form:
+  path: '/borg/{borg}/edit'
+  defaults:
+    _entity_form: borg.edit
+    _title: 'Edit'
+  requirements:
+    _permission: 'administer borg'
+
+# View comment
+entity.borg.canonical:
+  path: '/borg/{borg}'
+  defaults:
+    _entity_view: 'borg'
+    _title: 'View content'
+  requirements:
+    _permission: 'access content'
+
+# Controller user comments
+entity.borg.controller:
+  path: '/borg'
+  defaults:
+    _controller: 'Drupal\borg\Controller\BorgController::allOutput'
+    _title: 'User comments'
+  requirements:
+    _permission: 'access content'

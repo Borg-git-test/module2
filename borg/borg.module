@@ -1,0 +1,79 @@
+<?php
+
+/**
+ * @file
+ * Provides a borg entity type.
+ */
+
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function borg_theme() {
+  return [
+    'borg' => [
+      'render element' => 'elements',
+    ],
+    'all' => [
+      'variables' => ['form' => [], 'element' => [], 'pager' => [],],
+    ],
+    'buttons' => [
+      'variables' => ['id' => [], 'delete' => [], 'edit' => [],],
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for borg templates.
+ *
+ * Default template: borg.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the borg information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function borg_preprocess_borg(array &$variables) {
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+  //chosen the template
+  $entity = $variables['elements']['#borg'];
+  //get the user id
+  $variables['user'] = $entity->getOwnerId();
+  //create the Delete button
+    $delete = [
+      '#type' => 'submit',
+      '#value' => 'Delete',
+      '#attributes' => [
+        'class' => ['btn-danger'],
+      ],
+    ];
+  //create the Edit button
+    $edit = [
+      '#type' => 'submit',
+      '#value' => 'Edit',
+      '#attributes' => [
+        'class' => ['btn-warning'],
+      ],
+    ];
+  //get buttons from template
+  $variables['buttons'] = [
+    '#theme' => 'buttons',
+    '#id' => $entity->id(),
+    '#delete' => $delete,
+    '#edit' => $edit,
+  ];
+  //create the Default Avatar
+  if (empty($entity->avatar->target_id)) {
+    $variables['content']['avatar'] = $entity->getDefaultAvatar();
+  }
+
+}
+
+//include the css library
+function borg_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'borg/borg';
+}

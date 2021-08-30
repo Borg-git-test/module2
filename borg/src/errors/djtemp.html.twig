@@ -1,0 +1,59 @@
+
+{{ attach_library('strayder/strayder-style') }}
+<div class="guestbook-content">
+  <h4>Your feedback, comments, impressions and wishes.</h4>
+  {% for row in rows %}
+    <div class="guestbook_user">
+      <div class="guestbook_header_content">
+        <div class="guestbook_name_image">
+          <div class="guestbook_name">
+            {{ row.name }}
+          </div>
+          <div class="guestbook_user_data">
+            <div class="guestbook_avatar">
+              {% if row.avatar__target_id.data %}
+                <img src="{{ row.avatar__target_id.url }}" alt="avatar">
+              {% else %}
+                <img src="modules/custom/strayder/files/default_user.png" alt="default_user">
+              {% endif %}
+            </div>
+            <div class="guestbook_timestamp">
+              {{ row.timestamp |date('M-d-Y H:i:s') }}
+            </div>
+          </div>
+        </div>
+        <div class="guestbook_contacts">
+          <span>Contacts:</span>
+          <div class="guestbook_email">
+            <a href="mailto:{{ row.email }}" class="guestbook_user_email">{{ row.email }}</a>
+          </div>
+          <div class="guestbook_telephone">
+            <a href="tel:{{ row.telephone }}" class="guestbook_user_telephone">{{ row.telephone }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="guestbook_feedback">
+        <div class="guestbook_feedback_message">
+          <div>Message:</div>
+          {{ row.message }}
+        </div>
+        <div class="guestbook_feedback_image">
+          {% if row.image__target_id.data %}
+            <div class="feedback_image_width">
+              <a href="{{ row.image__target_id.url }}"  target="_blank" >
+                <img src="{{ row.image__target_id.url }}" alt="image">
+              </a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+    {% if user.hasPermission('administer nodes') %}
+      <div class="guestbook_buttons">
+        <a href="/guestbook/edit/{{ row.id }}" class="use-ajax guestbook-edit" data-dialog-type="modal">{{ 'Edit' |trans }}</a>
+        <a href="/guestbook/delete/{{ row.id }}" class="use-ajax guestbook-delete" data-dialog-type="modal">{{ 'Delete'|trans }}</a>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

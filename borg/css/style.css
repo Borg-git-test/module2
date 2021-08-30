@@ -1,0 +1,102 @@
+form {
+  margin-block: 20px;
+}
+form .invalid_form_message, form .valid_form_message {
+  background-color: #f2dede;
+  color: #a94442;
+  padding: 10px;
+  border-radius: 5px;
+  margin-block: 10px;
+}
+form .valid_form_message {
+  background-color: #dff0d8;
+  color: #3c763d;
+}
+form .input-group-addon {
+  display: none;
+}
+form .message_telephone, form .message_email, form .message_name {
+  width: 100%;
+  text-align: center;
+}
+form .input-group {
+  width: 100%;
+}
+form .input-group .form-control, form .input-group .form-control:first-child {
+  width: 100%;
+  border-radius: 4px;
+}
+form .input-group .control-label {
+  margin-bottom: 5px;
+}
+form .button {
+  outline: none !important;
+}
+
+.element {
+  margin-block: 50px;
+}
+.element .flex {
+  display: flex;
+  justify-content: center;
+}
+.element .user_data .user_name {
+  position: relative;
+}
+.element .user_data .user_name .image {
+  display: flex;
+  justify-content: center;
+}
+.element .user_data .user_name .name {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  overflow-wrap: break-word;
+  text-transform: uppercase;
+  font-size: large;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+}
+.element .user_data .user_name .name a {
+  color: white;
+  text-decoration: none;
+}
+.element .user_data .time {
+  text-align: center;
+  background: #0071b3;
+  color: whitesmoke;
+  border-radius: 4px;
+}
+.element .user_contact .contact, .element .user_contact .email, .element .user_contact .telephone {
+  margin-bottom: 0;
+  font-size: 16px;
+}
+.element .user_contact .contact .field, .element .user_contact .email .field, .element .user_contact .telephone .field {
+  display: inline-block;
+}
+.element .user_contact .contact a, .element .user_contact .email a, .element .user_contact .telephone a {
+  text-decoration: none;
+}
+.element .user_contact .buttons {
+  margin-top: 10px;
+}
+.element .user_contact .buttons .button {
+  outline: none;
+}
+.element .user_contact .buttons a {
+  text-decoration: none;
+}
+.element .user_feedback {
+  margin-top: 20px;
+}
+.element .user_feedback .image {
+  margin: 0 20px 20px 0;
+  float: left;
+}
+.element .user_feedback .feedback {
+  text-align: justify;
+}
+/*# sourceMappingURL=style.css.map */

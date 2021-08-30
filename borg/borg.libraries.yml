@@ -1,0 +1,5 @@
+borg:
+  version: VERSION
+  css:
+    component:
+      css/style.css: {}

@@ -1,0 +1,3 @@
+administer borg:
+  title: 'Administer borg settings'
+  restrict access: true

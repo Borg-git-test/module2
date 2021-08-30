@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Theme implementation to present a buttons to delete and edit.
+ *
+ */
+#}
+{% if user.hasPermission('administer borg') %}
+  <div class="buttons">
+    <a href="/borg/{{ id }}/delete">{{ delete }}</a>
+    <a href="/borg/{{ id }}/edit">{{ edit }}</a>
+  </div>
+{% endif %}
+
